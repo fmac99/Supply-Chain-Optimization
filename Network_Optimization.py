@@ -35,7 +35,7 @@ class Optimizer:
 		model.DC = pyo.Set() #Distribution Centers
 		model.Products = pyo.Set() #Products
 		model.production_costs =pyo.Param(model.PC,model.Line, model.Products, within = pyo.NonNegativeReals) #Production Per Case by Product
-    model.prhub_trans_costs = pyo.Param(model.PC,model.Hub,model.Products, within = pyo.NonNegativeReals)#transportation costs from PC to Hubs
+    		model.prhub_trans_costs = pyo.Param(model.PC,model.Hub,model.Products, within = pyo.NonNegativeReals)#transportation costs from PC to Hubs
 		model.trans_costs = pyo.Param(model.PC, model.DC, model.Products, within = pyo.NonNegativeReals)#transportation costs from PC to DC
 		model.trans_costs_hub = pyo.Param(model.Hub, model.DC,model.Products, within = pyo.NonNegativeReals)#transportation costs Hub to DC
 		model.demands=pyo.Param(model.DC,model.Products, within = pyo.NonNegativeIntegers)#Demands for each location. Index = (DC, Product)
@@ -49,7 +49,6 @@ class Optimizer:
     
 		def ObjectiveFunction1(model):
 			 return (sum(model.production_costs_variable[p,l,k]*model.production_cases[p,l,k] for p in model.PC for l in model.Line for k in model.Products)
-             + sum(model.production_costs_fixed[p]*use_pc[p] for p in model.PC)
 				     + sum(model.prhub_trans_costs[p,h,k]*model.prhub_cases[p,h,k] for p in model.PC for h in model.Hub for k in model.Products)
 				     + sum(model.trans_costs[p,j,k]* model.direct_lane[p,j,k] *model.demands[j,k] for p in model.PC for j in model.DC for k in model.Products)
 				     +sum(model.trans_costs_hub[h,j,k]*model.hub_lane[h,j,k] *model.hub_demands[j,k] for h in model.Hub for j in model.DC for k in model.Products))#objective funtion to be optimized, minimize total cost.
