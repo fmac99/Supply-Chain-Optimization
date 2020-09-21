@@ -12,3 +12,16 @@ Add a slack variable for production capacity to allow you to run "over-capacity"
 Including a data file for the model for users to run examples
 As mentioned above breaking out fixed and variable costs
 potentially adding customer nodes from dcs to customers
+
+
+# Dependencies
+
+Pyomo
+
+Python 3.X
+
+Pandas
+
+Numpy
+
+Seaborn and/or matplotlib
